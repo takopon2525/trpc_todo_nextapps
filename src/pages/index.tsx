@@ -1,12 +1,14 @@
+import { getAllJSDocTagsOfKind } from "typescript";
 import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
-  // const hello = trpc.hello.hello.useQuery({ text: "client" });
-  const hello = trpc.hello.hello.useQuery({ text: "client" });
-  if (!hello.data) return <div>Loading...</div>;
+  const todo = trpc.todo.all.useQuery();
+  if (!todo.data) return <div>Loading...</div>;
   return (
     <div>
-      <p>{hello.data.greeting}</p>
+      {todo.data.map((item, i) => (
+        <p key={i}>{item.text}</p>
+      ))}
     </div>
   );
 }
