@@ -1,8 +1,14 @@
+import { ChangeEvent,FormEvent,useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-function Todos() {
+interface Props {
+  todo:string
+}
+
+export const Todos = () => {
+  
   return (
     <div>Todos</div>
   )
 }
 
-export default Todos
