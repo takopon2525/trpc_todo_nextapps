@@ -1,5 +1,4 @@
 import Todos from "@/components/Todos";
-import { getAllJSDocTagsOfKind } from "typescript";
 import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
