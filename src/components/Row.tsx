@@ -1,9 +1,12 @@
+import { FC } from "react";
+import { Task } from "@prisma/client";
 
+type TodoProps = {
+  todo: Task;
+  handleCheckTodo: (id: string) => void;
+  handleDeleteTodo: (id: string) => void;
+};
 
-function Row() {
-  return (
-    <div>Row</div>
-  )
-}
-
-export default Row
+export const Row: FC<{ todo: TodoProps }> = (todo) => {
+  return <div>Row</div>;
+};
