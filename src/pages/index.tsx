@@ -1,4 +1,4 @@
-import Todos from "@/components/Todos";
+import { Todos } from "@/components/Todos";
 import { trpc } from "../utils/trpc";
 
 export default function IndexPage() {
@@ -6,7 +6,7 @@ export default function IndexPage() {
   if (!todo.data) return <div>Loading...</div>;
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
-      <Todos />
+      <Todos result={todo.data} />
     </div>
   );
 }
