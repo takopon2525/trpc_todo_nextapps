@@ -1,7 +1,5 @@
 import { Task } from "@prisma/client";
 import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { isTemplateExpression } from "typescript";
-import { v4 as uuidv4 } from "uuid";
 import { AddTodo } from "./AddTodo";
 import { Row } from "./Row";
 
