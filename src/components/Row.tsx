@@ -27,7 +27,7 @@ export const Row: FC<TaskProps> = ({
       </p>
       <div className="flex justify-between items-center mr-2">
         <button
-          className="h-7 w-7 flex justify-center items-center bg-red-400 hover:bg-red-500 text-white font-bold rounded"
+          className="mr-2 h-7 w-7 flex justify-center items-center bg-red-400 hover:bg-red-500 text-white font-bold rounded"
           onClick={() => handleDeleteTodo(task.id)}
         >
           X
