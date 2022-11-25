@@ -6,7 +6,7 @@ export default function IndexPage() {
   if (!todo.data) return <div>Loading...</div>;
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
-      <Todos result={todo.data} />
+      <Todos tasks={todo.data} />
     </div>
   );
 }
