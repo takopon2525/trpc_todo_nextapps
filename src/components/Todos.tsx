@@ -1,7 +1,6 @@
 import { trpc } from "@/utils/trpc";
 import { Task } from "@prisma/client";
-import { ChangeEvent, FC, FormEvent, useState } from "react";
-import { AddTodo } from "./AddTodo";
+import { FC, useState } from "react";
 import { Row } from "./Row";
 
 export const Todos: FC<{ tasks: Task[] }> = (props) => {
@@ -10,19 +9,6 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
   const remainingTodos = props.tasks.filter((task) => !task.completed).length;
   const utils = trpc.useContext();
 
-  const handleChange = (e: ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    setTask(value);
-  };
-
-  // ここは削除
-  const handleSubmitTodo = (e: FormEvent) => {
-    e.preventDefault();
-    const text = task;
-    addTask.mutate({ text });
-    setTask("");
-    // TODO:ここにデータベースに入れるメソッドを追加
-  };
   const addTask = trpc.todo.add.useMutation({
     async onMutate({ text }) {
       await utils.todo.all.cancel();
@@ -43,11 +29,20 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
   const handleDeleteTodo = () => {};
   return (
     <section className="w-10/12 lg:w-1/2 max-w-2xl flex flex-col items-center">
-      <AddTodo
-        task={task}
-        handleChange={handleChange}
-        handleSumitTodo={handleSubmitTodo}
-      />
+      <div className="flex justify-between w-full">
+        <input
+          className="flex-1 rounded shadow p-2 text-grey-dark mr-2"
+          placeholder="What needs to be done"
+          autoFocus
+          onKeyDown={(e) => {
+            const text = e.currentTarget.value.trim();
+            if (e.key === "Enter" && text) {
+              addTask.mutate({ text });
+              e.currentTarget.value = "";
+            }
+          }}
+        />
+      </div>
       <div className="h-10" />
       {props.tasks.map((task) => (
         <Row
