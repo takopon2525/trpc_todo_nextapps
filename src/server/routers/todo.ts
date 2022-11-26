@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { publicProcedure, router } from "../trpc";
 import { prisma } from "../../server/utils/prisma";
 
@@ -9,4 +10,17 @@ export const todoRouter = router({
       },
     });
   }),
+  add: publicProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+        text: z.string().min(1),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const todo = await prisma.task.create({
+        data: input,
+      });
+      return todo;
+    }),
 });
