@@ -1,3 +1,4 @@
+import { trpc } from "@/utils/trpc";
 import { Task } from "@prisma/client";
 import { ChangeEvent, FC, FormEvent, useState } from "react";
 import { AddTodo } from "./AddTodo";
@@ -7,16 +8,36 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
   const [task, setTask] = useState("");
   const hasTodos = props.tasks.length > 0;
   const remainingTodos = props.tasks.filter((task) => !task.completed).length;
+  const utils = trpc.useContext();
 
   const handleChange = (e: ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     setTask(value);
   };
 
+  // ここは削除
   const handleSubmitTodo = (e: FormEvent) => {
     e.preventDefault();
+    const text = task;
+    addTask.mutate({ text });
+    setTask("");
     // TODO:ここにデータベースに入れるメソッドを追加
   };
+  const addTask = trpc.todo.add.useMutation({
+    async onMutate({ text }) {
+      await utils.todo.all.cancel();
+      const tasks = props.tasks ?? [];
+      utils.todo.all.setData(undefined, [
+        ...tasks,
+        {
+          id: `${Math.random()}`,
+          completed: false,
+          text,
+          createdAt: new Date(),
+        },
+      ]);
+    },
+  });
 
   const handleCheckTodo = () => {};
   const handleDeleteTodo = () => {};
