@@ -4,7 +4,6 @@ import { FC, useState } from "react";
 import { Row } from "./Row";
 
 export const Todos: FC<{ tasks: Task[] }> = (props) => {
-  const [task, setTask] = useState("");
   const hasTodos = props.tasks.length > 0;
   const remainingTodos = props.tasks.filter((task) => !task.completed).length;
   const utils = trpc.useContext();
