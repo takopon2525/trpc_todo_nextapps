@@ -23,4 +23,32 @@ export const todoRouter = router({
       });
       return todo;
     }),
+  edit: publicProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        data: z.object({
+          completed: z.boolean().optional(),
+          text: z.string().min(1).optional(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { id, data } = input;
+      const todo = await prisma.task.update({
+        where: { id },
+        data,
+      });
+      return todo;
+    }),
+  delete: publicProcedure
+    .input(z.string().uuid())
+    .mutation(async ({ input: id }) => {
+      await prisma.task.delete({ where: { id } });
+      return id;
+    }),
+  clearCopleted: publicProcedure.mutation(async () => {
+    await prisma.task.deleteMany({ where: { completed: true } });
+    return prisma.task.findMany();
+  }),
 });
