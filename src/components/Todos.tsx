@@ -12,12 +12,8 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
   const addTask = trpc.todo.add.useMutation({
     async onMutate({ text }) {
       const notification = toast.loading("todoを投稿しています...");
-      console.log("onMutate");
       await utils.todo.all.cancel();
       const tasks = props.tasks ?? [];
-      // react-hookでここでデータを待つようにしたらいいかもしれない。
-      // loadingをかませるような感じ
-
       utils.todo.all.setData(undefined, [
         ...tasks,
         {
@@ -27,13 +23,10 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
           createdAt: new Date(),
         },
       ]);
+      // この辺は修正の余地があるがとりあえずはOk
       toast.success("todoの投稿に成功しました！", {
         id: notification,
       });
-    },
-    // toastingを表示する
-    async onSuccess() {
-      console.log("success");
     },
   });
 
