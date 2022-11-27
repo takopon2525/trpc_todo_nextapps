@@ -1,12 +1,16 @@
 import "../styles/globals.css";
 import type { AppType } from "next/app";
 import { trpc } from "../utils/trpc";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <main className="grid grid-cols-9">
-      <Component {...pageProps} />
-    </main>
+    <div>
+      <Toaster />
+      <main>
+        <Component {...pageProps} />;
+      </main>
+    </div>
   );
 };
 
