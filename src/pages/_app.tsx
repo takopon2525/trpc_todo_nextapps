@@ -6,7 +6,7 @@ import Head from "next/head";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const title = "TODOアプリを作成して学ぶ";
-  const imgurl = "https://trpc-todo-nextapps.vercel.app/headerImg";
+  const imgurl = "https://trpc-todo-nextapps.vercel.app/headerImg.png";
   const description = "tRPCとsupabseを使ってTODOアプリを作ってみましょう！";
   return (
     <div>
