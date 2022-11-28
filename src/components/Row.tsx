@@ -1,6 +1,7 @@
 import { FC, use, useState } from "react";
 import { Task } from "@prisma/client";
 import { trpc } from "@/utils/trpc";
+import { ArchiveBoxXMarkIcon } from '@heroicons/react/24/solid'
 
 type TaskProps = {
   task: Task;
@@ -43,7 +44,7 @@ export const Row: FC<TaskProps> = ({ task }) => {
     >
       {/* 編集 */}
       <input
-        className={`ml-2 text-xl font-sans font-medium w-full rounded-l ${
+        className={`mr-2 text-xl font-sans font-medium w-full rounded ${
           task.completed ? "line-through" : "text-gray-700"
         }`}
         value={text}
@@ -68,7 +69,7 @@ export const Row: FC<TaskProps> = ({ task }) => {
             deleteTask.mutate(task.id);
           }}
         >
-          X
+          <ArchiveBoxXMarkIcon/>
         </button>
         {/* todoの完了 */}
         <input
