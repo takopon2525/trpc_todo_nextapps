@@ -10,7 +10,7 @@ export const Row: FC<TaskProps> = ({ task }) => {
   const utils = trpc.useContext();
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(task.text);
-  const [] = useState(task.completed)
+  const [completed, setCompleted] = useState(task.completed);
   const editTask = trpc.todo.edit.useMutation({
     async onMutate({ id, data }) {
       await utils.todo.all.cancel();
@@ -32,7 +32,7 @@ export const Row: FC<TaskProps> = ({ task }) => {
       {/* 編集 */}
       <input
         className={`ml-2 text-xl font-sans font-medium w-full rounded-l ${
-          task.completed ? "text-white line-through" : "text-gray-700"
+          task.completed ? "line-through" : "text-gray-700"
         }`}
         value={text}
         onChange={(e) => {
@@ -61,10 +61,15 @@ export const Row: FC<TaskProps> = ({ task }) => {
           type="checkbox"
           checked={task.completed}
           onChange={(e) => {
-            const checked = e.currentTarget.checked
-            
+            const checked = e.currentTarget.checked;
+            setCompleted(checked);
+            editTask.mutate({
+              id: task.id,
+              data: { completed: checked },
+            });
           }}
           className="form-checkbox h-7 w-7"
+          autoFocus={editing}
         />
       </div>
     </div>
