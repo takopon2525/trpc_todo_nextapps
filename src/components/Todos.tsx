@@ -30,12 +30,9 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
     },
   });
 
-  const handleCheckTodo = () => {};
-  const handleDeleteTodo = () => {};
-
   return (
-    <section className="h-screen w-10/12 lg:w-1/2 max-w-2xl flex flex-col items-center">
-      <div className="flex justify-between w-full my-5">
+    <section className="w-10/12 lg:w-1/2 max-w-2xl flex flex-col items-center">
+      <div className="flex justify-between w-full mt-5">
         <input
           className="flex-1 rounded shadow p-2 text-grey-dark mr-2"
           placeholder="What needs to be done"
@@ -51,16 +48,11 @@ export const Todos: FC<{ tasks: Task[] }> = (props) => {
       </div>
       <div className="h-10" />
       {props.tasks.map((task) => (
-        <Row
-          key={task.id}
-          task={task}
-          handleCheckTodo={() => handleCheckTodo}
-          handleDeleteTodo={() => handleDeleteTodo}
-        />
+        <Row key={task.id} task={task} />
       ))}
       {!hasTodos && <p>Please add a todo!</p>}
       {hasTodos && (
-        <p>
+        <p className="my-3">
           [{remainingTodos} of {props.tasks.length}] todos remaining
         </p>
       )}

@@ -8,7 +8,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <div>
       <Toaster />
       <main>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </main>
     </div>
   );
