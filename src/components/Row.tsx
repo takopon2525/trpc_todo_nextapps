@@ -39,13 +39,13 @@ export const Row: FC<TaskProps> = ({ task }) => {
   return (
     <div
       className={`flex w-full p-2 mb-2 justify-between items-center rounded ${
-        task.completed ? "bg-gray-400 " : "bg-sky-300"
+        completed ? "bg-gray-400 " : "bg-sky-300"
       }`}
     >
       {/* 編集 */}
       <input
         className={`mr-2 text-xl font-sans font-medium w-full rounded ${
-          task.completed ? "line-through" : "text-gray-700"
+          completed ? "line-through" : "text-gray-700"
         }`}
         value={text}
         onChange={(e) => {
