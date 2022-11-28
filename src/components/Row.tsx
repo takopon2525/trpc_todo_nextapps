@@ -1,7 +1,7 @@
 import { FC, use, useState } from "react";
 import { Task } from "@prisma/client";
 import { trpc } from "@/utils/trpc";
-import { ArchiveBoxXMarkIcon } from '@heroicons/react/24/solid'
+import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/solid";
 
 type TaskProps = {
   task: Task;
@@ -38,7 +38,7 @@ export const Row: FC<TaskProps> = ({ task }) => {
 
   return (
     <div
-      className={`flex w-full p-4 mb-2 justify-between items-center rounded ${
+      className={`flex w-full p-2 mb-2 justify-between items-center rounded ${
         task.completed ? "bg-gray-400 " : "bg-sky-300"
       }`}
     >
@@ -63,14 +63,6 @@ export const Row: FC<TaskProps> = ({ task }) => {
         }}
       />
       <div className="flex justify-between items-center mr-2">
-        <button
-          className="mr-2 h-7 w-7 flex justify-center items-center bg-red-400 hover:bg-red-500 text-white font-bold rounded"
-          onClick={() => {
-            deleteTask.mutate(task.id);
-          }}
-        >
-          <ArchiveBoxXMarkIcon/>
-        </button>
         {/* todoの完了 */}
         <input
           type="checkbox"
@@ -86,6 +78,14 @@ export const Row: FC<TaskProps> = ({ task }) => {
           className="form-checkbox h-7 w-7"
           autoFocus={editing}
         />
+        <div
+          className="text-gray-600 hover:text-gray-800 mx-2"
+          onClick={() => {
+            deleteTask.mutate(task.id);
+          }}
+        >
+          <ArchiveBoxXMarkIcon className="h-9 w-9" />
+        </div>
       </div>
     </div>
   );
