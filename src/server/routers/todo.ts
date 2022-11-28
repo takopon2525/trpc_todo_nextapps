@@ -47,8 +47,4 @@ export const todoRouter = router({
       await prisma.task.delete({ where: { id } });
       return id;
     }),
-  clearCopleted: publicProcedure.mutation(async () => {
-    await prisma.task.deleteMany({ where: { completed: true } });
-    return prisma.task.findMany();
-  }),
 });
