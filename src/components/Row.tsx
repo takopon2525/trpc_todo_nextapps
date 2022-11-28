@@ -23,6 +23,18 @@ export const Row: FC<TaskProps> = ({ task }) => {
     },
   });
 
+  const deleteTask = trpc.todo.delete.useMutation({
+    async onMutate() {
+      await utils.todo.all.cancel();
+      const allTasks = utils.todo.all.getData();
+      if (!allTasks) return;
+      utils.todo.all.setData(
+        undefined,
+        allTasks.filter((t) => t.id != task.id)
+      );
+    },
+  });
+
   return (
     <div
       className={`flex w-full p-4 mb-2 justify-between items-center rounded ${
@@ -52,7 +64,9 @@ export const Row: FC<TaskProps> = ({ task }) => {
       <div className="flex justify-between items-center mr-2">
         <button
           className="mr-2 h-7 w-7 flex justify-center items-center bg-red-400 hover:bg-red-500 text-white font-bold rounded"
-          onClick={() => {}}
+          onClick={() => {
+            deleteTask.mutate(task.id);
+          }}
         >
           X
         </button>
